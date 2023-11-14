@@ -15,7 +15,10 @@ let news = [
   }
 ];
 const getAllPostFunc = async () => {
-  const res = await getAllPosts()
+  const res = await getAllPosts({
+    page: 1,
+    limit: 20
+  })
   console.log(res)
   news = res.data.items
 }

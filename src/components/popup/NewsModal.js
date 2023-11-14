@@ -1,8 +1,24 @@
 import { TokyoContext } from "@/src/Context";
-import { useContext } from "react";
+import ReactMarkdown from 'react-markdown'
+import { remarkGfm } from 'remark-gfm';
+import { rehypeColorChips } from 'rehype-color-chips';
+import { use, useContext, useEffect, useState } from "react";
 import ModalContainer from "./ModalContainer";
+import { getPostById } from "@/pages/api/posts";
 const NewsModal = () => {
+  const markdown = `# Just a link: www.nasa.gov.‘‘’对撒的撒’‘’
+  `
+  // 根据id获取文章内容
+  let [postItem, setPostItem] = useState({})
+  const getPostContent = async (id) => {
+    const res = await getPostById(id)
+    console.log(res)
+    setPostItem(res.data)
+  }
   const { newsModal, setNewsModal } = useContext(TokyoContext);
+  useEffect(() => {
+    getPostContent(newsModal.id)
+  }, [])
   return (
     <ModalContainer nullValue={setNewsModal}>
       <div className="image relative overflow-hidden">
@@ -38,7 +54,11 @@ const NewsModal = () => {
       {/* News Popup Start */}
       <div className="main_content w-full float-left">
         <div className="descriptions w-full float-left">
-        1.原型和原型链
+          {postItem.body}
+          <ReactMarkdown
+          >
+            {postItem.body}
+          </ReactMarkdown>
         </div>
       </div>
       {/* /News Popup End */}
