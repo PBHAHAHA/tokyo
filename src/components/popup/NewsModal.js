@@ -1,19 +1,23 @@
+
 import { TokyoContext } from "@/src/Context";
-import ReactMarkdown from 'react-markdown'
-import { remarkGfm } from 'remark-gfm';
-import { rehypeColorChips } from 'rehype-color-chips';
-import { use, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ModalContainer from "./ModalContainer";
 import { getPostById } from "@/pages/api/posts";
+import MdRenderer from "../common/MdRenderer";
+import moment from "moment";
+
+
+
+
 const NewsModal = () => {
-  const markdown = `# Just a link: www.nasa.gov.‘‘’对撒的撒’‘’
-  `
   // 根据id获取文章内容
   let [postItem, setPostItem] = useState({})
   const getPostContent = async (id) => {
     const res = await getPostById(id)
     console.log(res)
+    res.data.updateAt = moment(newsModal.updateAt).format("YYYY-MM-DD")
     setPostItem(res.data)
+    
   }
   const { newsModal, setNewsModal } = useContext(TokyoContext);
   useEffect(() => {
@@ -45,7 +49,7 @@ const NewsModal = () => {
               >
                 {newsModal.author}
               </a>{" "}
-              <span className="relative">{newsModal.date}</span>
+              <span className="relative">{postItem.updateAt}</span>
             </p>
           </div>
         </div>
@@ -54,11 +58,13 @@ const NewsModal = () => {
       {/* News Popup Start */}
       <div className="main_content w-full float-left">
         <div className="descriptions w-full float-left">
-          {postItem.body}
-          <ReactMarkdown
+          {/* {postItem.body} */}
+          {/* <ReactMarkdown
+            components={MarkdownComponents}
           >
             {postItem.body}
-          </ReactMarkdown>
+          </ReactMarkdown> */}
+          <MdRenderer body={postItem.body}></MdRenderer>
         </div>
       </div>
       {/* /News Popup End */}

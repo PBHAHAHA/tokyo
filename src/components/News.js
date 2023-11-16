@@ -4,6 +4,7 @@ import { TokyoContext } from "../Context";
 import SectionContainer from "./SectionContainer";
 import SectionTitle from "./SectionTitle";
 import { getAllPosts } from "@/pages/api/posts";
+import moment from "moment";
 
 let news = [
   {
@@ -19,8 +20,10 @@ const getAllPostFunc = async () => {
     page: 1,
     limit: 20
   })
-  console.log(res)
   news = res.data.items
+  news.forEach(item => {
+    item.createdAt = moment(item.createdAt).format("YYYY-MM-DD")
+  })
 }
 
 
