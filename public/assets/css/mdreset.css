@@ -1,0 +1,21 @@
+
+.markdown-body blockquote {
+    margin: initial;
+}
+
+.markdown-body ul {
+    margin: initial;
+}
+
+.markdown-body ol {
+    margin: initial;
+}
+
+.markdown-body li {
+    margin: initial;
+    list-style: initial;
+}
+
+.markdown-body p {
+    margin: initial;
+}

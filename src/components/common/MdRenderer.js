@@ -1,6 +1,9 @@
 import ReactMarkdown from 'react-markdown'
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import remarkGfm from 'remark-gfm'
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+// import "github-markdown-css"
+
 const MarkdownComponents = {
     // 代码高亮的处理
     code({ inline, className, ...props }) {
@@ -24,9 +27,12 @@ const MarkdownComponents = {
 const MdRenderer = (props) => {
     return (
         <ReactMarkdown
+            className='markdown-body'
             components={MarkdownComponents}
+            remarkPlugins={[remarkGfm]}
+            children={props.body}
         >
-            {props.body}
+            
         </ReactMarkdown>
     )
 }
